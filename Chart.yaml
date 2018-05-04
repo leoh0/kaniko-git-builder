@@ -1,0 +1,11 @@
+name: kaniko-git-builder
+version: 0.0.1
+appVersion: 0.0.0
+description: building image by kaniko from git source
+home: https://github.com/leoh0/kaniko-git-builder
+sources:
+  - https://github.com/leoh0/kaniko-git-builder
+maintainers:
+  - name: Eohyung Lee
+    email: liquidnuker@gmail.com
+engine: gotpl

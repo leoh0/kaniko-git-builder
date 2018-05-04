@@ -1,0 +1,9 @@
+git:
+  url: https://github.com
+  organization: leoh0
+  sourcename: openstack-conf-diff
+
+registry:
+  url: docker.io
+  organization: leoh0
+  sourcename: openstack-conf-diff

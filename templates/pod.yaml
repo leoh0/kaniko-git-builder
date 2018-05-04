@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko-{{ .Values.git.organization }}-{{ .Values.git.sourcename }}
+spec:
+  volumes:
+   - name: git
+     emptyDir: {}
+  initContainers:
+  - name: code
+    image: axeclbr/git
+    command:
+      - "git"
+      - "clone"
+      - "{{ .Values.git.url }}/{{ .Values.git.organization }}/{{ .Values.git.sourcename }}"
+      - "/build/{{ .Values.git.organization }}/{{ .Values.git.sourcename }}"
+    volumeMounts:
+    - mountPath: /build
+      name: git
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:latest
+    args: ["--dockerfile=/build/{{ .Values.git.organization }}/{{ .Values.git.sourcename }}/Dockerfile",
+            "--context=/build/{{ .Values.git.organization }}/{{ .Values.git.sourcename }}",
+            "--destination={{ .Values.registry.url }}/{{ .Values.registry.organization }}/{{ .Values.registry.sourcename }}:latest"]
+    volumeMounts:
+    - mountPath: /build
+      name: git
+  restartPolicy: Never
